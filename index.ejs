@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%=title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstarp.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
     <title><nodeの練習ページ></title>
 </head>
 <body class="container">
@@ -14,6 +14,11 @@
         <div role="main">
             <p><%=content %></p>
             <p><a href="/other">Other Pageに移動 &gt;&gt;</a></p>
+
+            <form method="post" action="/postevent">
+                <input type="text" name="msg" class="form-control">
+                <input type="submit" value="Click" class="btn btn-primary">
+            </form>
         </div>
     
 </body>
