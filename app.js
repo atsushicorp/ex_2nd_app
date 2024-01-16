@@ -61,6 +61,7 @@ function getFormClient(request,response){
                     const stdout = execSync('ls -l /Users/atsushimachida/image1.png;');
                     result = stdout.toString();
                 }catch(err){
+                    result = err.stderr.toString();
                     console.log({
                         "error": err.stderr.toString() 
                     });
