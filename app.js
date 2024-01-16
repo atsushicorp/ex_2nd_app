@@ -4,11 +4,13 @@ const ejs = require('ejs');
 
 const url = require('url');
 const qs = require('querystring');
+const { exec, execSync } = require('child_process');
 
 const index_page = fs.readFileSync('./index.ejs','utf8');
 const style_page = fs.readFileSync('./style.css','utf8');
 const other_page = fs.readFileSync('./other.ejs','utf8');
 const postevent_page = fs.readFileSync('./event.ejs','utf8');
+const print_page = fs.readFileSync('./execprint.ejs','utf8');
 
 var server = http.createServer(getFormClient);
 
@@ -51,12 +53,45 @@ function getFormClient(request,response){
             response_postevent(request, response);
             break;
         
+        case '/printevent':
+            var query = url_parts.query;
+            var result = '';
+            if(query.ls != undefined){
+                try{
+                    const stdout = execSync('ls -l /Users/atsushimachida/image1.png;');
+                    result = stdout.toString();
+                }catch(err){
+                    console.log({
+                        "error": err.stderr.toString() 
+                    });
+
+                }
+                
+                /*exec('ls -l /Users/atsushimachida/image1.png',(err, stdout, stderr) => {
+                    if(err){
+                        console.log(`stdeer: ${stderr}`);
+                        return
+                    }
+                    result = stdout;
+                    console.log(`stdout: ${stdout}`);
+                });*/
+            }
+            var content = ejs.render(print_page, {
+                title:'テストプリント実行ページ',
+                content:'{ result : '+ result +' }',
+            });
+            response.writeHead(200,{'Content-Type': 'text/html'});
+            response.write(content);
+            response.end();
+            break;
+        
         default:
             response.writeHead(200,{'Cotent-Type': 'text/html'});
             response.write('Nopage...');
             response.end();
             
     }
+
 
     function response_postevent(request, response){
         var msg = "これはフォーム受信ページです。";
