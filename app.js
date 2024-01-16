@@ -58,7 +58,7 @@ function getFormClient(request,response){
             var result = '';
             if(query.ls != undefined){
                 try{
-                    const stdout = execSync('ls -l /Users/atsushimachida/image1.png;');
+                    const stdout = execSync('lpstat -p');
                     result = stdout.toString();
                 }catch(err){
                     result = err.stderr.toString();
